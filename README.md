@@ -1,4 +1,4 @@
-# bulbNixieClock
+# blubNixieClock
 
 A cross-platform GUI for the **[Blub Nixie Clock](https://www.daliborfarny.com/project/blub-nixie-clock/)**
 by Dalibor Farný.
