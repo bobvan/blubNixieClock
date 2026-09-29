@@ -9,19 +9,16 @@
 # Scratch outputs
 /scratch/
 
-# KiCad build outputs and caches — regenerate from the schematic/board
-*.rpt
-*.net
-*-backups/
-fp-info-cache
-*.kicad_prl
-
-# Generated interchange exports (embed absolute paths) — regenerate with kicad-cli
-/hw/interchange/
-
-# Firmware build artifacts
+# --- GUI app build artifacts (stack TBD — see docs/design/0001) ---
+# Node / web (Electron, web + Web Serial, etc.)
+node_modules/
+/dist/
 /build/
-*.o
-*.elf
-*.bin
-*.hex
+*.log
+.env
+.env.local
+# Rust / Tauri
+/target/
+/src-tauri/target/
+# Flutter / Dart
+/.dart_tool/
