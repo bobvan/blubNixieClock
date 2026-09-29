@@ -1,0 +1,27 @@
+# Editor / OS cruft
+*~
+.DS_Store
+.*.swp
+
+# Large cached reference PDFs belong in the fleet doclib, not the repo
+*.pdf
+
+# Scratch outputs
+/scratch/
+
+# KiCad build outputs and caches — regenerate from the schematic/board
+*.rpt
+*.net
+*-backups/
+fp-info-cache
+*.kicad_prl
+
+# Generated interchange exports (embed absolute paths) — regenerate with kicad-cli
+/hw/interchange/
+
+# Firmware build artifacts
+/build/
+*.o
+*.elf
+*.bin
+*.hex
