@@ -40,9 +40,9 @@ DTR line is wired to the Arduino reset (see *Reset on open*).
 | `t<epoch>` | Set the time from a UNIX timestamp | `t` → internal epoch | **Epoch of local wall-clock time**, DST included; the firmware subtracts the DST hour per `z` and stores standard time. See *Time*. |
 | `f<1|2>` | Format: 1 = 12 h, 2 = 24 h | `f` → `1`/`2` | `f3` rejected. |
 | `s<1–9>` | "Display speed", 1 fastest — this is the **transition speed** | `s` → value | Vendor app names the steps `9x` … `2x`, `Slow`. `s0` was **accepted in RAM but not saved**: read back `0` until reboot, then the old value. |
-| `m<1–3>` | "Transition of the display" — the **transition effect** | `m` → value | Vendor app: Normal, Smooth, Slot machine (assumed 1–3 in that order). `m0` is rejected. |
+| `m<1–3>` | "Transition of the display" — the **transition effect** | `m` → value | 1 Normal, 2 Smooth, 3 Slot machine (names from the vendor app; order verified on the tube). `m0` is rejected. |
 | `n<0–9>` | Night-mode brightness | `n` → value | **0 is accepted** (vendor doc says 1–9). Vendor app: `Off`, `3%`, `6%`, `9%`, `12%`, `24%`, `36%`, `48%`, `72%`, `Full`. |
-| `o<0–9>` | Day-mode brightness | `o` → value | As `n`; `o0` accepted and read back `0`. |
+| `o<0–9>` | Day-mode brightness | `o` → value | As `n`. `o0` read back `0` and the tube went dark. |
 | `r<HHhh>` | Night range, 24 h, e.g. `r2107` | `r` → `21-7` | Read-back format differs from the set format (`H-H`, unpadded). |
 | `z<0–5>` | DST rule | `z` → value | **Vendor table is off by one:** `z0` is accepted, and `z`=1 applies the US DST hour. So 0 none, 1 US, 2 EU, 3 Mexico, 4 Australia, 5 NZ (the last four inferred from the vendor order). |
 

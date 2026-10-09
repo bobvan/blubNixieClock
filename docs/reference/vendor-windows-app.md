@@ -38,12 +38,12 @@ embedded in the executable, and the firmware version from the strings in the HEX
 faster or slower than one another, which is how it came to be labelled a speed here.
 
 **2. Brightness has a tenth step: Off.** The app offers ten brightness levels where the vendor's
-USB page documents 1–9. The likely mapping is `0` = Off through `9` = Full, which would let night
-mode switch the tube off entirely. Unverified on hardware.
+USB page documents 1–9. `0` = Off through `9` = Full; verified on hardware 2026-10-09 (`o0` turned the
+tube dark), so night mode can switch the tube off entirely.
 
 **3. Named steps.** The app's names (`9x` … `Slow`, `3%` … `Full`, the effect names) are more
-meaningful than our bare numbers. The value each name sends is inferred from list order and not
-yet verified: speed `1` = `9x` (fastest) … `9` = `Slow`, matching the USB page's "s1 fastest, s9
+meaningful than our bare numbers. The value each name sends follows list order (effect order verified on the
+tube 2026-10-09): speed `1` = `9x` (fastest) … `9` = `Slow`, matching the USB page's "s1 fastest, s9
 slowest"; effect `1` = Normal, `2` = Smooth, `3` = Slot machine.
 
 **4. Firmware update is the only real capability gap.** The app resets the clock into its Arduino
