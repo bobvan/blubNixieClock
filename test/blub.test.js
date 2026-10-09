@@ -144,3 +144,12 @@ test('Clock: syncTime sends wall epoch on the second and reports offset', async 
   assert.equal(r.internal, r.expected + 1);
   assert.ok(Math.abs(r.sent - Blub.wallEpoch()) <= 1);
 });
+
+test('Clock: flushInput swallows the empty-line complaint', async () => {
+  const t = fakeTransport({ boot: null, replies: { v: 'Blub FW1.9 (x/x), d' } });
+  const clock = new Blub.Clock(t, { replyTimeoutMs: 500 });
+  await clock.flushInput();                       // fake answers "Command: \0, Value: 0"
+  assert.deepEqual(t.sent, ['']);
+  assert.equal(await clock.version(), 'Blub FW1.9 (x/x), d');
+  t.close();
+});

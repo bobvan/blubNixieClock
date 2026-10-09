@@ -54,7 +54,9 @@ persisted.
 
 ## Reset on open [observed]
 
-Opening the port asserts DTR and **resets the Arduino**: the tubes run the startup sequence,
+Opening the port with DTR asserted **resets the Arduino** (seen with socat and pyserial on
+macOS and Linux; **not** seen with Chrome's Web Serial on macOS, which evidently leaves DTR
+alone): the tubes run the startup sequence,
 and about 1.6 s later the firmware prints a three-line boot banner:
 
 ```

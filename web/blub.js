@@ -193,6 +193,13 @@ const Blub = (() => {
       return p;
     }
 
+    // Without a DTR reset the Arduino may still hold a partial line from an earlier
+    // session; an empty line terminates it. The firmware answers with its
+    // unknown-command form, which is expected here and swallowed.
+    async flushInput() {
+      try { await this.cmd(''); } catch (e) { /* "Command: \0, Value: 0" — expected */ }
+    }
+
     async version() { return this.cmd('v'); }
 
     // Settings: bare letter reads; letter+value sets and returns the value now in effect.

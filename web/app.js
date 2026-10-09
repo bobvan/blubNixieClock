@@ -61,6 +61,7 @@
       clock = new Blub.Clock(makeTransport(port), { log });
       port.addEventListener('disconnect', () => disconnect('Clock unplugged'));
       await clock.waitForBoot();
+      await clock.flushInput();
       els.fw.textContent = await clock.version();
       setStatus('Connected', 'ok');
       await refreshSettings();
@@ -183,7 +184,10 @@
           el.appendChild(o);
         }
         value = () => el.value;
-        render = (text) => { el.value = text; };
+        render = (text) => {
+          el.value = text;
+          if (el.value !== text) log('info', `${letter}: read back ${JSON.stringify(text)}, no matching option`);
+        };
         el.onchange = () => applySetting(letter);
       } else {
         const slider = document.createElement('input');

@@ -18,10 +18,6 @@ No build step, no dependencies.
 3. Click **Connect** and pick the clock (it is filtered to the clock's USB bridge; tick *show
    all serial ports* if it does not appear).
 
-Opening the port resets the clock — the tubes run their startup sequence and the page waits
-for the firmware's boot banner before talking. That is the clock's doing (DTR auto-reset), not
-a fault. The page keeps the port open until you disconnect so it only happens once.
-
 The vendor's **clear EEPROM** command is deliberately not in the GUI.
 
 ## Protocol
