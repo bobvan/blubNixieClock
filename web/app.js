@@ -94,7 +94,8 @@
   function showFailure(msg) {
     if (/^no reply/.test(msg)) {
       els.failTitle.textContent = 'No clock found on that port';
-      els.failDetail.textContent = 'The serial port opened, but we heard no reply to our request for the firmware version.';
+      els.failDetail.textContent = 'The serial port opened, but we heard no reply to our request for the firmware version. ' +
+        'It is probably not the clock, or another program has the port open.';
     } else {
       els.failTitle.textContent = 'Could not connect';
       els.failDetail.textContent = msg;
