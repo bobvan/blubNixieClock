@@ -190,7 +190,7 @@
         el.id = `set-${letter}`;
         for (let v = spec.min; v <= spec.max; v++) {
           const o = document.createElement('option');
-          o.value = v; o.textContent = `${v} — ${spec.names[v]}`;
+          o.value = v; o.textContent = spec.names[v];
           el.appendChild(o);
         }
         value = () => el.value;
@@ -199,19 +199,6 @@
           if (el.value !== text) log('info', `${letter}: read back ${JSON.stringify(text)}, no matching option`);
         };
         el.onchange = () => applySetting(letter);
-      } else {
-        const slider = document.createElement('input');
-        slider.type = 'range'; slider.id = `set-${letter}`;
-        slider.min = spec.min; slider.max = spec.max; slider.step = 1;
-        const out = document.createElement('output');
-        out.textContent = '–';
-        slider.oninput = () => { out.textContent = slider.value; };
-        slider.onchange = () => applySetting(letter);
-        el = document.createElement('span');
-        el.className = 'slider';
-        el.append(slider, out);
-        value = () => slider.value;
-        render = (text) => { slider.value = text; out.textContent = slider.value; };
       }
       const result = document.createElement('span');
       result.className = 'result';
@@ -286,7 +273,7 @@
 
   // ---- enable/disable -----------------------------------------------------------
   function enableControls(on) {
-    document.querySelectorAll('#settings select, #settings input, #digits button, #time-mode, #sync')
+    document.querySelectorAll('#settings select, #digits button, #time-mode, #sync')
       .forEach((el) => { el.disabled = !on; });
   }
 

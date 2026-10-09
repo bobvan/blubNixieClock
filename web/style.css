@@ -80,9 +80,7 @@ dialog p { margin: 0 0 16px; color: var(--muted); }
 .setting { display: grid; grid-template-columns: 1fr; gap: 4px; padding: 8px 0; border-top: 1px solid var(--line); }
 .setting:first-child { border-top: 0; }
 .setting label { color: var(--muted); font-size: .9rem; }
-.setting select, .setting input[type=range] { font: inherit; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; }
-.setting input[type=range] { padding: 0; width: 100%; max-width: 260px; accent-color: var(--glow); vertical-align: middle; }
-.slider output { display: inline-block; min-width: 2ch; margin-left: 10px; font-family: ui-monospace, Menlo, monospace; }
+.setting select { font: inherit; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; }
 .range select { width: auto; }
 .setting small { color: var(--muted); }
 .result { font-size: .85rem; min-height: 1.2em; }

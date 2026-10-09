@@ -21,9 +21,9 @@ embedded in the executable, and the firmware version from the strings in the HEX
 | Sync time from the computer | Yes | Yes, and shows the clock's offset afterwards |
 | DST rule | 6 named rules | Same 6 rules |
 | 12/24 h | Yes | Yes |
-| Transition speed | 9 steps, named `9x` … `2x`, `Slow` | Yes (labelled *Display speed*, 1–9 unnamed) |
-| Transition effect | `Normal`, `Smooth`, `Slotmachine` | Yes, but mislabelled *Transition speed*, values unnamed |
-| Day / night brightness | 10 steps: `Off`, `3%`, `6%`, `9%`, `12%`, `24%`, `36%`, `48%`, `72%`, `Full` | 9 steps (1–9); no *Off* |
+| Transition speed | 9 steps, named `9x` … `2x`, `Slow` | Same (adopted 2026-10-09) |
+| Transition effect | `Normal`, `Smooth`, `Slotmachine` | Same (adopted 2026-10-09) |
+| Day / night brightness | 10 steps: `Off`, `3%`, `6%`, `9%`, `12%`, `24%`, `36%`, `48%`, `72%`, `Full` | Same (adopted 2026-10-09; `0` accepted by firmware) |
 | Night time range | Start and end hour, 00–23 | Same |
 | Test digits / back to time | Yes | Yes |
 | **Firmware update** | **Yes** — flashes a `.hex` over USB (Arduino STK500 bootloader, ATmega328P) | **No** |

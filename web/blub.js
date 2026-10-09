@@ -22,12 +22,17 @@ const Blub = (() => {
   const DST_RULES = ['None', 'US', 'EU', 'Mexico', 'Australia', 'New Zealand'];
 
   // Readable/writable settings. `read` = bare letter; `set` = letter + value.
+  // Option names follow the vendor's Windows app (docs/reference/vendor-windows-app.md).
+  const BRIGHTNESS = { 0: 'Off', 1: '3%', 2: '6%', 3: '9%', 4: '12%', 5: '24%', 6: '36%', 7: '48%', 8: '72%', 9: 'Full' };
+  const SPEEDS = { 1: '9x (fastest)', 2: '8x', 3: '7x', 4: '6x', 5: '5x', 6: '4x', 7: '3x', 8: '2x', 9: 'Slow' };
+
+  // Readable/writable settings. `read` = bare letter; `set` = letter + value.
   const SETTINGS = {
     f: { label: 'Time format', min: 1, max: 2, names: { 1: '12 h', 2: '24 h' } },
-    s: { label: 'Display speed', min: 1, max: 9, hint: '1 fastest … 9 slowest' },
-    m: { label: 'Transition speed', min: 1, max: 3, hint: '1 slowest … 3 fastest' },
-    n: { label: 'Night brightness', min: 1, max: 9 },
-    o: { label: 'Day brightness', min: 1, max: 9 },
+    s: { label: 'Transition speed', min: 1, max: 9, names: SPEEDS },
+    m: { label: 'Transition effect', min: 1, max: 3, names: { 1: 'Normal', 2: 'Smooth', 3: 'Slot machine' } },
+    o: { label: 'Day brightness', min: 0, max: 9, names: BRIGHTNESS },
+    n: { label: 'Night brightness', min: 0, max: 9, names: BRIGHTNESS },
     r: { label: 'Night mode hours' },
     z: { label: 'DST rule', min: 0, max: 5, names: Object.fromEntries(DST_RULES.map((n, i) => [i, n])) },
   };
