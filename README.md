@@ -31,7 +31,8 @@ Safari can't talk to the clock, and neither can phones or tablets. If you don't 
 
    ![Chrome's list of serial ports](docs/images/02-port-picker-chrome.png)
 
-   Firefox asks in its own way:
+   Firefox asks in its own way: check that the drop-down says **USB Single Serial**, then
+   click **Allow**.
 
    ![Firefox's serial port prompt](docs/images/02-port-picker-firefox.png)
 
