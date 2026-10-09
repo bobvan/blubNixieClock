@@ -9,7 +9,6 @@
 <body>
   <header>
     <h1>Blub Nixie Clock</h1>
-    <button id="disconnect" class="only-connected">Disconnect</button>
   </header>
 
   <p id="unsupported" class="banner err" hidden>
@@ -32,6 +31,7 @@
         <span id="status" class="status">Connecting…</span>
         <span id="port-id">—</span>
         <span id="fw">—</span>
+        <button id="disconnect">Disconnect</button>
       </div>
     </section>
 
@@ -70,7 +70,7 @@
   </main>
 
   <dialog id="fail-dialog">
-    <h3 id="fail-title">No clock answered on that port</h3>
+    <h3 id="fail-title">No clock found on that port</h3>
     <p id="fail-detail"></p>
     <button id="fail-retry" class="primary">Select another serial port</button>
   </dialog>

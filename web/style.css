@@ -57,6 +57,7 @@ main { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)
 body.connected #connection { padding: 8px 16px; }
 .statusline { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: baseline; }
 .statusline .status { margin: 0; }
+.statusline #disconnect { margin-left: auto; padding: 4px 12px; font-size: .9rem; }
 .statusline .status.ok::before { content: "●"; color: var(--ok); margin-right: .45em; }
 .statusline .status.warn::before { content: "●"; color: var(--warn); margin-right: .45em; }
 #port-id, #fw { color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .85rem; }

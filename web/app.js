@@ -93,9 +93,8 @@
   // A port that opened but never answered is almost always the wrong port.
   function showFailure(msg) {
     if (/^no reply/.test(msg)) {
-      els.failTitle.textContent = 'No clock answered on that port';
-      els.failDetail.textContent = 'The serial port opened, but nothing replied to the version command. ' +
-        'It is probably not the clock, or another program has the port open.';
+      els.failTitle.textContent = 'No clock found on that port';
+      els.failDetail.textContent = 'The serial port opened, but we heard no reply to our request for the firmware version.';
     } else {
       els.failTitle.textContent = 'Could not connect';
       els.failDetail.textContent = msg;
