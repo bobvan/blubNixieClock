@@ -9,22 +9,29 @@
 <body>
   <header>
     <h1>Blub Nixie Clock</h1>
-    <div class="conn">
-      <label class="any"><input type="checkbox" id="any-port"> show all serial ports</label>
-      <button id="connect">Connect</button>
-    </div>
+    <button id="disconnect" class="only-connected">Disconnect</button>
   </header>
 
   <p id="unsupported" class="banner err" hidden>
     This browser has no Web Serial API. Use Chrome, Chromium, or Edge.
   </p>
 
-  <section class="status-row">
-    <span id="status" class="status">Not connected</span>
-    <span id="fw" class="fw"></span>
-  </section>
-
   <main>
+    <section class="card" id="connection">
+      <h2>Connection</h2>
+      <p id="status" class="status">Not connected</p>
+      <div class="only-disconnected">
+        <p class="help">Plug the clock into a USB port, click <b>Connect</b>, and choose the clock in the
+          list that appears. The tubes will run their startup sequence; that is normal.</p>
+        <button id="connect" class="primary">Connect</button>
+        <label class="any"><input type="checkbox" id="any-port"> show all serial ports</label>
+      </div>
+      <table class="only-connected details">
+        <tr><th>Port</th><td id="port-id">—</td></tr>
+        <tr><th>Firmware</th><td id="fw">—</td></tr>
+      </table>
+    </section>
+
     <section class="card">
       <h2>Time</h2>
       <table class="times">

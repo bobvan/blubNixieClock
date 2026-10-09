@@ -25,7 +25,7 @@ const Blub = (() => {
   const SETTINGS = {
     f: { label: 'Time format', min: 1, max: 2, names: { 1: '12 h', 2: '24 h' } },
     s: { label: 'Display speed', min: 1, max: 9, hint: '1 fastest … 9 slowest' },
-    m: { label: 'Transition', min: 1, max: 3 },
+    m: { label: 'Transition speed', min: 1, max: 3, hint: '1 slowest … 3 fastest' },
     n: { label: 'Night brightness', min: 1, max: 9 },
     o: { label: 'Day brightness', min: 1, max: 9 },
     r: { label: 'Night mode hours' },

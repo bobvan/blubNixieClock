@@ -27,8 +27,13 @@ header {
 h1 { margin: 0; font-size: 1.5rem; font-weight: 600; letter-spacing: .02em; }
 h1::before { content: "●"; color: var(--glow); margin-right: .5em; text-shadow: 0 0 10px var(--glow); }
 h2 { margin: 0 0 10px; font-size: 1.05rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
-.conn { display: flex; align-items: center; gap: 12px; }
-.any { color: var(--muted); font-size: .9rem; }
+.any { display: block; margin-top: 10px; color: var(--muted); font-size: .9rem; }
+.help { margin: 0 0 12px; }
+body:not(.connected) .only-connected { display: none; }
+body.connected .only-disconnected { display: none; }
+.details { border-collapse: collapse; }
+.details th { text-align: left; font-weight: 500; color: var(--muted); padding: 3px 12px 3px 0; }
+.details td { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9rem; }
 
 button {
   background: var(--card); color: var(--ink); border: 1px solid var(--line);
@@ -40,12 +45,10 @@ button.primary { background: var(--glow-dim); border-color: var(--glow); }
 button.primary:hover:not(:disabled) { background: var(--glow); color: #1a1008; }
 button.small { padding: 2px 8px; font-size: .8rem; text-transform: none; letter-spacing: 0; margin-left: 8px; }
 
-.status-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; padding-bottom: 12px; }
-.status { color: var(--muted); }
+.status { margin: 0 0 10px; font-weight: 600; }
 .status.ok { color: var(--ok); }
 .status.warn { color: var(--warn); }
 .status.err { color: var(--err); }
-.fw { color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .85rem; }
 .banner { padding: 10px 14px; border-radius: 6px; border: 1px solid var(--line); }
 .banner.err { border-color: var(--err); color: var(--err); }
 

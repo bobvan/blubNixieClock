@@ -6,7 +6,7 @@
 
   const $ = (id) => document.getElementById(id);
   const els = {
-    connect: $('connect'), status: $('status'), fw: $('fw'),
+    connect: $('connect'), disconnect: $('disconnect'), status: $('status'), fw: $('fw'), portId: $('port-id'),
     hostTime: $('host-time'), tubeTime: $('tube-time'), internalTime: $('internal-time'),
     offset: $('offset'), sync: $('sync'), syncResult: $('sync-result'),
     settings: $('settings'), digits: $('digits'), timeMode: $('time-mode'), displayMode: $('display-mode'),
@@ -28,6 +28,7 @@
   els.clearLog.onclick = () => { els.log.textContent = ''; };
 
   function setStatus(text, cls = '') { els.status.textContent = text; els.status.className = `status ${cls}`; }
+  function setConnected(on) { document.body.classList.toggle('connected', on); }
   function setBusy(busy) { document.body.classList.toggle('busy', busy); }
 
   // ---- Web Serial transport ---------------------------------------------
@@ -52,15 +53,15 @@
     try {
       await port.open({ baudRate: Blub.BAUD });
       const info = port.getInfo();
-      const id = info.usbVendorId ? ` (${hex(info.usbVendorId)}:${hex(info.usbProductId)})` : '';
-      setStatus(`Connected${id} — waiting for the clock to boot…`, 'warn');
+      els.portId.textContent = info.usbVendorId
+        ? `USB ${hex(info.usbVendorId)}:${hex(info.usbProductId)}` : 'serial port';
+      setConnected(true);
+      setStatus('Connected — waiting for the clock to boot…', 'warn');
       clock = new Blub.Clock(makeTransport(port), { log });
       port.addEventListener('disconnect', () => disconnect('Clock unplugged'));
-      els.connect.textContent = 'Disconnect';
       await clock.waitForBoot();
-      const version = await clock.version();
-      els.fw.textContent = version;
-      setStatus(`Connected${id}`, 'ok');
+      els.fw.textContent = await clock.version();
+      setStatus('Connected', 'ok');
       await refreshSettings();
       await readTime();
       pollTimer = setInterval(readTime, 2000);
@@ -81,14 +82,15 @@
     try { if (writer) { writer.releaseLock(); } } catch (e) { /* closing anyway */ }
     try { if (port) await port.close(); } catch (e) { /* closing anyway */ }
     port = reader = writer = clock = null; lastInternal = null;
-    els.connect.textContent = 'Connect';
-    els.fw.textContent = '';
+    setConnected(false);
+    els.fw.textContent = els.portId.textContent = '—';
     els.tubeTime.textContent = els.internalTime.textContent = els.offset.textContent = '—';
     setStatus(reason || 'Not connected');
   }
 
   const hex = (n) => n.toString(16).padStart(4, '0');
-  els.connect.onclick = () => (port ? disconnect() : connect());
+  els.connect.onclick = () => connect();
+  els.disconnect.onclick = () => disconnect();
 
   // ---- time -----------------------------------------------------------------
   async function readTime() {

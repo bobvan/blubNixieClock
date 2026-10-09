@@ -40,7 +40,7 @@ DTR line is wired to the Arduino reset (see *Reset on open*).
 | `t<epoch>` | Set the time from a UNIX timestamp | `t` → internal epoch | **Epoch of local wall-clock time**, DST included; the firmware subtracts the DST hour per `z` and stores standard time. See *Time*. |
 | `f<1|2>` | Format: 1 = 12 h, 2 = 24 h | `f` → `1`/`2` | `f3` rejected. |
 | `s<1–9>` | Display speed, 1 fastest | `s` → value | `s0` was **accepted in RAM but not saved**: read back `0` until reboot, then the old value. |
-| `m<1–3>` | Transition style | `m` → value | |
+| `m<1–3>` | Transition speed | `m` → value | 1 slowest … 3 fastest (observed on the tubes). |
 | `n<1–9>` | Night-mode brightness | `n` → value | |
 | `o<1–9>` | Day-mode brightness | `o` → value | |
 | `r<HHhh>` | Night range, 24 h, e.g. `r2107` | `r` → `21-7` | Read-back format differs from the set format (`H-H`, unpadded). |
