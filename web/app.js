@@ -168,19 +168,18 @@
         render = (text) => { el.value = text; };
         el.onchange = () => applySetting(letter);
       } else {
-        el = document.createElement('input');
-        el.type = 'range'; el.id = `set-${letter}`;
-        el.min = spec.min; el.max = spec.max; el.step = 1;
+        const slider = document.createElement('input');
+        slider.type = 'range'; slider.id = `set-${letter}`;
+        slider.min = spec.min; slider.max = spec.max; slider.step = 1;
         const out = document.createElement('output');
         out.textContent = '–';
-        el.oninput = () => { out.textContent = el.value; };
-        el.onchange = () => applySetting(letter);
-        const wrap = document.createElement('span');
-        wrap.className = 'slider';
-        wrap.append(el, out);
-        value = () => el.value;
-        render = (text) => { el.value = text; out.textContent = text; };
-        el = wrap;
+        slider.oninput = () => { out.textContent = slider.value; };
+        slider.onchange = () => applySetting(letter);
+        el = document.createElement('span');
+        el.className = 'slider';
+        el.append(slider, out);
+        value = () => slider.value;
+        render = (text) => { slider.value = text; out.textContent = slider.value; };
       }
       const result = document.createElement('span');
       result.className = 'result';
