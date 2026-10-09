@@ -9,8 +9,8 @@ your computer's clock, read and change every setting, and show a digit on the tu
 
 ## Using it
 
-You need a Mac or PC with **Google Chrome** (Microsoft Edge works too). Safari and Firefox
-can't talk to the clock, and neither can phones or tablets. If you don't have Chrome,
+You need a Mac or PC with **Google Chrome** (Microsoft Edge and recent Firefox work too).
+Safari can't talk to the clock, and neither can phones or tablets. If you don't have Chrome,
 [download it free from Google](https://www.google.com/chrome/). Nothing else to install.
 
 1. **Get the app.** On this page, click the green **Code** button, then **Download ZIP**.
@@ -29,7 +29,11 @@ can't talk to the clock, and neither can phones or tablets. If you don't have Ch
    **USB Single Serial**, then the **Connect** button. You may see the clock run its startup
    sequence; that is normal.
 
-   ![Chrome's list of serial ports](docs/images/02-port-picker.png)
+   ![Chrome's list of serial ports](docs/images/02-port-picker-chrome.png)
+
+   Firefox asks in its own way:
+
+   ![Firefox's serial port prompt](docs/images/02-port-picker-firefox.png)
 
 6. **That's it.** Set the clock from your computer's time, change its settings, or show a digit.
    Every change is saved in the clock.

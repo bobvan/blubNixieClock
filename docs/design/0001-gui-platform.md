@@ -57,6 +57,9 @@ Reasoning, from the first hardware session (`docs/reference/serial-protocol.md`)
 - Keeping option C open costs little: no framework lock-in, plain HTML/CSS/JS, and a transport
   interface the protocol layer talks to (Web Serial today; a Tauri serial plugin later).
 
+Update 2026-10-09: recent Firefox also supports Web Serial (verified against the clock on
+macOS, with its own port-selection prompt), so "Chromium-only" now means "not Safari".
+
 Consequences: source lives in `web/`; no bundler or package manager unless a real need appears;
 the protocol module must be usable outside the browser (testable under Node) so the CLI and any
 future shell reuse it.
