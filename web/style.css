@@ -51,6 +51,8 @@ button.small { padding: 2px 8px; font-size: .8rem; text-transform: none; letter-
 .status.err { color: var(--err); }
 .banner { padding: 10px 14px; border-radius: 6px; border: 1px solid var(--line); }
 .banner.err { border-color: var(--err); color: var(--err); }
+.banner p { margin: 4px 0; }
+.banner a { color: var(--ink); }
 
 main { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
 #connection { grid-column: 1 / -1; }

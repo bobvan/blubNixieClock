@@ -10,7 +10,8 @@ your computer's clock, read and change every setting, and show a digit on the tu
 ## Using it
 
 You need a Mac or PC with **Google Chrome** (Microsoft Edge works too). Safari and Firefox
-can't talk to the clock. Nothing to install.
+can't talk to the clock, and neither can phones or tablets. If you don't have Chrome,
+[download it free from Google](https://www.google.com/chrome/). Nothing else to install.
 
 1. **Get the app.** On this page, click the green **Code** button, then **Download ZIP**.
    Double-click the downloaded file to unzip it.

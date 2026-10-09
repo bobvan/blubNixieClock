@@ -290,11 +290,36 @@
       .forEach((el) => { el.disabled = !on; });
   }
 
+  // ---- unsupported browsers ----------------------------------------------------
+  // Detection is by feature (no navigator.serial), so it catches every browser that
+  // can't do this; the user-agent check only picks friendlier wording.
+  function explainUnsupported() {
+    const ua = navigator.userAgent;
+    const why = $('unsupported-why'), fix = $('unsupported-fix');
+    if (/iPhone|iPad|Android/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) {
+      why.textContent = "Phones and tablets can't talk to the clock over USB.";
+      fix.innerHTML = 'Use a Mac or PC with <b>Google Chrome</b> instead.';
+      return;
+    }
+    if (!window.isSecureContext) {
+      why.textContent = "The browser blocks USB access for pages loaded this way.";
+      fix.innerHTML = 'Open <i>Blub Nixie Clock.html</i> directly from your computer\'s files ' +
+        '(right-click, <b>Open With</b>, <b>Google Chrome</b>) rather than from a web address.';
+      return;
+    }
+    const name = navigator.brave ? 'Brave'
+      : /Firefox\//.test(ua) ? 'Firefox'
+      : /Edg\/|OPR\/|Chrome\//.test(ua) ? null
+      : /Safari\//.test(ua) ? 'Safari' : null;
+    why.textContent = name ? `${name} can't talk to the clock.` : "This browser can't talk to the clock.";
+  }
+
   // ---- init -------------------------------------------------------------------
   buildSettings();
   buildDigits();
   enableControls(false);
   if (!navigator.serial) {
+    explainUnsupported();
     els.unsupported.hidden = false;
     els.connect.disabled = true;
   }
