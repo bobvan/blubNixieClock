@@ -136,7 +136,12 @@ const Blub = (() => {
 
     _onLine(line) {
       this.log('rx', line);
-      if (this.pending) {
+      // Banner-shaped lines are never command replies (a reset can land mid-conversation,
+      // and the host driver can replay a stale banner) — except that `v` answers with the
+      // banner's own first line.
+      const bannerish = parseBannerLine(line) !== null;
+      const isVersionReply = this.pending && this.pending.text === 'v' && /^Blub /.test(line);
+      if (this.pending && (!bannerish || isVersionReply)) {
         const p = this.pending; this.pending = null;
         clearTimeout(p.timer);
         p.resolve(line);
@@ -148,26 +153,23 @@ const Blub = (() => {
       }
     }
 
-    // Opening the port resets the Arduino. Wait for the boot banner (ends with the
-    // "rtc:" line) and then for quiet; give up waiting after `maxMs` if no banner
-    // appears (port opened without a reset).
-    async waitForBoot({ maxMs = 5000, quietMs = 750 } = {}) {
+    // Opening the port usually resets the Arduino, whose boot banner arrives ~1.6 s later;
+    // the host driver may also replay a stale banner immediately on open. So: wait at
+    // least `minMs`, and until `quietMs` of silence, before saying anything.
+    async waitForBoot({ minMs = 2500, quietMs = 1500, maxMs = 8000 } = {}) {
       const start = Date.now();
-      let seenRtc = this.unsolicited.some((l) => /^\s*rtc:/.test(l));
       let lastCount = this.unsolicited.length;
-      let quietSince = Date.now();
-      while (Date.now() - start < maxMs) {
+      let quietSince = start;
+      for (;;) {
         await sleep(50);
-        if (this.unsolicited.length !== lastCount) {
-          lastCount = this.unsolicited.length;
-          quietSince = Date.now();
-          seenRtc = seenRtc || this.unsolicited.some((l) => /^\s*rtc:/.test(l));
-        } else if (seenRtc && Date.now() - quietSince >= quietMs) {
-          break;
-        }
+        const now = Date.now();
+        if (this.unsolicited.length !== lastCount) { lastCount = this.unsolicited.length; quietSince = now; }
+        if (now - start >= maxMs) break;
+        if (now - start >= minMs && now - quietSince >= quietMs) break;
       }
-      this.log('info', seenRtc ? `boot banner seen (${this.banner.version || '?'})` : 'no boot banner');
-      return seenRtc;
+      const seen = this.unsolicited.some((l) => /^\s*rtc:/.test(l));
+      this.log('info', seen ? `boot banner seen (${this.banner.version || '?'})` : 'no boot banner');
+      return seen;
     }
 
     // Send one command line and resolve with the single reply line. Serialized.
@@ -179,7 +181,7 @@ const Blub = (() => {
             this.pending = null;
             reject(new Error(`no reply to "${text}" within ${this.replyTimeoutMs} ms`));
           }, this.replyTimeoutMs);
-          this.pending = { resolve, reject, timer };
+          this.pending = { text, resolve, reject, timer };
         });
         this.log('tx', text);
         await this.transport.write(new TextEncoder().encode(text + '\n'));

@@ -54,9 +54,10 @@ persisted.
 
 ## Reset on open [observed]
 
-Opening the port with DTR asserted **resets the Arduino** (seen with socat and pyserial on
-macOS and Linux; **not** seen with Chrome's Web Serial on macOS, which evidently leaves DTR
-alone): the tubes run the startup sequence,
+Opening the port with DTR asserted **resets the Arduino**. With socat and pyserial the tubes
+visibly run their startup sequence. With Chrome's Web Serial on macOS the owner saw no startup
+sequence, yet a fresh boot banner still arrived ~1 s after open, so the firmware did restart
+(unresolved). Either way,
 and about 1.6 s later the firmware prints a three-line boot banner:
 
 ```
@@ -66,7 +67,10 @@ intern: 2026/10/8 21:31:03
 ```
 
 — version, the firmware's internal clock, and the RTC, unpadded `Y/M/D H:M:S`. Nothing else is
-ever printed unsolicited. Commands sent during the reboot are lost. A GUI should keep the port
+ever printed unsolicited. Commands sent during the reboot are lost, and the host driver may
+replay a **stale** banner from the previous session the instant the port opens — so a client
+must not treat the first banner as "boot finished". The GUI waits at least 2.5 s and for 1.5 s
+of silence, and never accepts a banner-shaped line as a command reply (except `v`'s). A GUI should keep the port
 open for its whole session, and on open should wait for the banner and then for quiet before
 sending anything. Stale banner text can also be buffered by the host driver and delivered on the
 next open. Through a gateway that reopens the device per TCP connection, two banners were often

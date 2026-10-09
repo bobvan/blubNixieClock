@@ -88,7 +88,7 @@ test('Clock: waits for boot banner, reads version and settings', async () => {
     f: '1', s: '3', m: '2', n: '9', o: '9', r: '21-7', z: '1',
   } });
   const clock = new Blub.Clock(t, { replyTimeoutMs: 500 });
-  assert.equal(await clock.waitForBoot({ maxMs: 1000, quietMs: 50 }), true);
+  assert.equal(await clock.waitForBoot({ minMs: 100, quietMs: 50, maxMs: 1000 }), true);
   assert.equal(clock.banner.version, 'FW1.9');
   assert.equal(clock.banner.rtc, '2026/10/8 21:47:21');
   assert.equal(await clock.version(), 'Blub FW1.9 (b015ea6/b015ea6), Jul  8 2026 12:19:02');
@@ -99,7 +99,7 @@ test('Clock: waits for boot banner, reads version and settings', async () => {
 test('Clock: no banner -> waitForBoot gives up and returns false', async () => {
   const t = fakeTransport({ boot: null });
   const clock = new Blub.Clock(t, { replyTimeoutMs: 500 });
-  assert.equal(await clock.waitForBoot({ maxMs: 150, quietMs: 50 }), false);
+  assert.equal(await clock.waitForBoot({ minMs: 100, quietMs: 50, maxMs: 300 }), false);
   t.close();
 });
 
@@ -152,4 +152,32 @@ test('Clock: flushInput swallows the empty-line complaint', async () => {
   assert.deepEqual(t.sent, ['']);
   assert.equal(await clock.version(), 'Blub FW1.9 (x/x), d');
   t.close();
+});
+
+test('Clock: a reset banner landing mid-conversation does not shift replies', async () => {
+  // Replays the 2026-10-09 failure: the real reset banner arrives while commands are pending.
+  const enc = new TextEncoder();
+  let waiter = null; const outbox = [];
+  const push = (s) => { outbox.push(enc.encode(s)); if (waiter) { const w = waiter; waiter = null; w(outbox.shift()); } };
+  const replies = { v: 'Blub FW1.9 (b015ea6/b015ea6), Jul  8 2026 12:19:02', f: '1', s: '3' };
+  let first = true;
+  const t = {
+    async write(bytes) {
+      const line = new TextDecoder().decode(bytes).trim();
+      if (first) {             // reset banner lands just before the first reply
+        first = false;
+        push(BANNER);
+      }
+      setTimeout(() => push(replies[line] + '\r\n'), 5);
+    },
+    read() {
+      if (outbox.length) return Promise.resolve(outbox.shift());
+      return new Promise((r) => { waiter = r; });
+    },
+  };
+  const clock = new Blub.Clock(t, { replyTimeoutMs: 500 });
+  assert.equal(await clock.get('f'), '1');      // not the banner's "Blub ..." line
+  assert.equal(await clock.version(), replies.v);
+  assert.equal(await clock.get('s'), '3');
+  assert.equal(clock.banner.rtc, '2026/10/8 21:47:21');
 });
