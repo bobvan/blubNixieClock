@@ -1,32 +1,51 @@
 # blubNixieClock
 
-A cross-platform GUI for the **[Blub Nixie Clock](https://www.daliborfarny.com/project/blub-nixie-clock/)**
+A web GUI for the **[Blub Nixie Clock](https://www.daliborfarny.com/project/blub-nixie-clock/)**
 by Dalibor Farný.
 
-The clock contains an Arduino that exposes a serial port speaking a documented protocol. This
-project is the desktop/web application that drives it — reading and setting the clock over that
-serial link.
+The clock contains an Arduino behind a USB-serial bridge, speaking a small line-oriented
+protocol. This project talks to it from a browser using the Web Serial API: set the time from
+your computer's clock, read and change every setting, and show a digit on the tubes.
 
-## Design direction
+## Run it
 
-The first open decision is how to deliver the GUI (see [`docs/design/`](docs/design/)):
+No build step, no dependencies.
 
-- **Web + Chrome Web Serial API** — a web page that talks to the clock through Chrome's Web Serial;
-  zero-install and one codebase, Chromium-only.
-- **Native app (Win/Lin/Mac)** — a desktop application (e.g. Tauri, Electron, Flutter, Qt) using a
-  native serial library.
+1. Plug the clock into USB.
+2. Open `web/index.html` in **Chrome, Chromium, or Edge** (Firefox and Safari have no Web
+   Serial). If the Connect button complains about a secure context, serve the folder instead:
+   `python3 -m http.server` in the repo root, then open <http://localhost:8000/web/>.
+3. Click **Connect** and pick the clock (it is filtered to the clock's USB bridge; tick *show
+   all serial ports* if it does not appear).
 
-One or both.
+Opening the port resets the clock — the tubes run their startup sequence and the page waits
+for the firmware's boot banner before talking. That is the clock's doing (DTR auto-reset), not
+a fault. The page keeps the port open until you disconnect so it only happens once.
+
+The vendor's **clear EEPROM** command is deliberately not in the GUI.
+
+## Protocol
+
+Mapped against real hardware (firmware 1.9) in
+[`docs/reference/serial-protocol.md`](docs/reference/serial-protocol.md), including the parts
+the vendor page does not document: how to read settings back, what the replies mean, how `t`
+treats time zones and DST, and the USB identity.
 
 ## Repository layout
 
-- **[`docs/`](docs/)** — the durable record: design decisions and reasoning, and reference material
-  including the serial protocol. See [`docs/README.md`](docs/README.md).
-- Application source lives alongside once the platform decision is made.
+- **[`web/`](web/)** — the app. `blub.js` is the protocol layer (no DOM, also loads under
+  Node); `app.js` is the Web Serial transport and UI; `index.html` + `style.css` the page.
+- **[`test/`](test/)** — `node --test test/blub.test.js` exercises the protocol layer against
+  a fake clock that replies with strings captured from the real one.
+- **[`docs/`](docs/)** — the durable record: design decisions with reasoning
+  ([`docs/design/`](docs/design/)) and reference material ([`docs/reference/`](docs/reference/)).
+  See [`docs/README.md`](docs/README.md).
 
-## Status
+## Design
 
-Early stage — scaffolding in place; the GUI-platform decision is the first task.
+[`docs/design/0001-gui-platform.md`](docs/design/0001-gui-platform.md): web-first with Chrome's
+Web Serial; the protocol layer is kept transport-agnostic so a native shell (Tauri) or a CLI
+can reuse it later.
 
 ## License
 

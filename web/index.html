@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blub Nixie Clock</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Blub Nixie Clock</h1>
+    <div class="conn">
+      <label class="any"><input type="checkbox" id="any-port"> show all serial ports</label>
+      <button id="connect">Connect</button>
+    </div>
+  </header>
+
+  <p id="unsupported" class="banner err" hidden>
+    This browser has no Web Serial API. Use Chrome, Chromium, or Edge.
+  </p>
+
+  <section class="status-row">
+    <span id="status" class="status">Not connected</span>
+    <span id="fw" class="fw"></span>
+  </section>
+
+  <main>
+    <section class="card">
+      <h2>Time</h2>
+      <table class="times">
+        <tr><th>This computer</th><td id="host-time">—</td></tr>
+        <tr><th>Tubes should show</th><td id="tube-time">—</td></tr>
+        <tr><th>Clock internal (standard time)</th><td id="internal-time">—</td></tr>
+        <tr><th>Clock vs. this computer</th><td id="offset">—</td></tr>
+      </table>
+      <button id="sync" class="primary">Set clock from this computer</button>
+      <p id="sync-result" class="note"></p>
+      <p class="note">The clock keeps local standard time and applies its DST rule at display.
+        Sync sends this computer's local wall-clock time; the DST rule below should match your region.</p>
+    </section>
+
+    <section class="card">
+      <h2>Settings</h2>
+      <div id="settings"></div>
+      <p class="note">Each change is sent immediately and saved by the clock. ✓ means the clock
+        read back the value you chose.</p>
+    </section>
+
+    <section class="card">
+      <h2>Display</h2>
+      <div id="digits" class="digits"></div>
+      <button id="time-mode">Back to time</button>
+      <span id="display-mode" class="note"></span>
+    </section>
+
+    <section class="card log-card">
+      <h2>Serial log <button id="clear-log" class="small">clear</button></h2>
+      <div id="log" class="log"></div>
+    </section>
+  </main>
+
+  <footer>
+    <a href="https://github.com/bobvan/blubNixieClock">blubNixieClock</a> ·
+    protocol notes in <code>docs/reference/serial-protocol.md</code>
+  </footer>
+
+  <script src="blub.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
