@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Blub Nixie Clock</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="web/style.css">
 </head>
 <body>
   <header>
@@ -12,7 +12,9 @@
   </header>
 
   <p id="unsupported" class="banner err" hidden>
-    This browser has no Web Serial API. Use Chrome, Chromium, or Edge.
+    This browser can't talk to the clock. Open this file in <b>Google Chrome</b> (or Microsoft
+    Edge) instead: right-click <i>Blub Nixie Clock.html</i>, choose <b>Open With</b>, then
+    <b>Google Chrome</b>.
   </p>
 
   <main>
@@ -80,7 +82,7 @@
     protocol notes in <code>docs/reference/serial-protocol.md</code>
   </footer>
 
-  <script src="blub.js"></script>
-  <script src="app.js"></script>
+  <script src="web/blub.js"></script>
+  <script src="web/app.js"></script>
 </body>
 </html>

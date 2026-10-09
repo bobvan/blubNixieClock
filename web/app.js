@@ -128,12 +128,22 @@
     // advance the last reading by the time elapsed since it was taken
     const internal = lastInternal.epoch + Math.round((Date.now() - lastInternal.at) / 1000);
     els.internalTime.textContent = Blub.formatEpoch(internal);
-    els.tubeTime.textContent = Blub.formatEpoch(Blub.displayEpoch(internal, now)).slice(11, 16);
+    els.tubeTime.textContent = tubeClock(Blub.displayEpoch(internal, now));
     const off = internal - Blub.expectedInternalEpoch(now);
     els.offset.textContent = `${off > 0 ? '+' : ''}${off} s`;
     els.offset.className = Math.abs(off) <= 1 ? 'ok' : Math.abs(off) <= 60 ? 'warn' : 'err';
   }
   setInterval(renderTime, 250);
+
+  // Hours and minutes as the tube shows them, following the Time format setting
+  // (12 h: no leading zero, 1–12; 24 h: 00–23).
+  function tubeClock(epoch) {
+    const hhmm = Blub.formatEpoch(epoch).slice(11, 16);
+    const fmt = document.getElementById('set-f');
+    if (!fmt || fmt.value !== '1') return hhmm;
+    const h = Number(hhmm.slice(0, 2)) % 12 || 12;
+    return `${h}:${hhmm.slice(3)}`;
+  }
 
   els.sync.onclick = async () => {
     if (!clock) return;
