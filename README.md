@@ -15,7 +15,8 @@ Windows, Mac and Linux.
 
 You need a Windows, Mac or Linux computer with **Google Chrome** (Microsoft Edge and recent
 Firefox work too). Safari can't talk to the clock, and neither can phones or tablets. If you
-don't have Chrome, [download it free from Google](https://www.google.com/chrome/).
+don't have either, download [Chrome](https://www.google.com/chrome/) or
+[Firefox](https://www.mozilla.org/firefox/new/) free.
 
 1. **Plug the clock into your computer** with its USB cable.
 2. **[Open the app](https://bobvan.github.io/blubNixieClock/) in Chrome.**

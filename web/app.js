@@ -309,8 +309,9 @@
     }
     if (location.protocol !== 'file:') {
       fix.innerHTML = 'Open this page in <b>Google Chrome</b> (or Microsoft Edge, or a recent Firefox) ' +
-        'instead: copy the address above into Chrome. Don\'t have Chrome? ' +
-        '<a href="https://www.google.com/chrome/" target="_blank" rel="noopener">Download it free from Google</a>.';
+        'instead: copy the address above into it. Don\'t have one? Download ' +
+        '<a href="https://www.google.com/chrome/" target="_blank" rel="noopener">Chrome</a> or ' +
+        '<a href="https://www.mozilla.org/firefox/new/" target="_blank" rel="noopener">Firefox</a> free.';
     }
     const name = navigator.brave ? 'Brave'
       : /Firefox\//.test(ua) ? 'Firefox'
