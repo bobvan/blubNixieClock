@@ -70,6 +70,13 @@ sending anything. Stale banner text can also be buffered by the host driver and 
 next open. Through a gateway that reopens the device per TCP connection, two banners were often
 seen per connection (close and open each seem to toggle DTR).
 
+## Shared ports on macOS [observed]
+
+macOS does not give a serial device to one process exclusively. With another program holding
+the port, Chrome's Web Serial opened it without error, sent `v`, and the reply was delivered to
+the *other* reader — so from the GUI's side a busy port looks exactly like a port with no clock
+on it (no reply). The GUI's "no clock found" dialog therefore mentions both causes.
+
 ## Time [observed]
 
 The clock has no time-zone setting. Internally it keeps **local standard time** as a UNIX-style
