@@ -7,6 +7,7 @@
   const $ = (id) => document.getElementById(id);
   const els = {
     connect: $('connect'), disconnect: $('disconnect'), status: $('status'), fw: $('fw'), portId: $('port-id'),
+    failDialog: $('fail-dialog'), failTitle: $('fail-title'), failDetail: $('fail-detail'), failRetry: $('fail-retry'),
     hostTime: $('host-time'), tubeTime: $('tube-time'), internalTime: $('internal-time'),
     offset: $('offset'), sync: $('sync'), syncResult: $('sync-result'),
     settings: $('settings'), digits: $('digits'), timeMode: $('time-mode'), displayMode: $('display-mode'),
@@ -67,9 +68,10 @@
       pollTimer = setInterval(readTime, 2000);
       enableControls(true);
     } catch (e) {
-      log('info', `connect failed: ${e.message || e}`);
-      setStatus(`Connect failed: ${e.message || e}`, 'err');
+      const msg = e.message || String(e);
+      log('info', `connect failed: ${msg}`);
       await disconnect();
+      showFailure(msg);
     } finally {
       setBusy(false);
     }
@@ -85,8 +87,22 @@
     setConnected(false);
     els.fw.textContent = els.portId.textContent = '—';
     els.tubeTime.textContent = els.internalTime.textContent = els.offset.textContent = '—';
-    setStatus(reason || 'Not connected');
+    if (reason) log('info', reason);
   }
+
+  // A port that opened but never answered is almost always the wrong port.
+  function showFailure(msg) {
+    if (/^no reply/.test(msg)) {
+      els.failTitle.textContent = 'No clock answered on that port';
+      els.failDetail.textContent = 'The serial port opened, but nothing replied to the version command. ' +
+        'It is probably not the clock, or another program has the port open.';
+    } else {
+      els.failTitle.textContent = 'Could not connect';
+      els.failDetail.textContent = msg;
+    }
+    els.failDialog.showModal();
+  }
+  els.failRetry.onclick = () => { els.failDialog.close(); connect(); };
 
   const hex = (n) => n.toString(16).padStart(4, '0');
   els.connect.onclick = () => connect();

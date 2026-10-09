@@ -17,19 +17,22 @@
   </p>
 
   <main>
+    <!-- Disconnected: a full-width card that leads the page. Connected: one slim status line. -->
     <section class="card" id="connection">
-      <h2>Connection</h2>
-      <p id="status" class="status">Not connected</p>
       <div class="only-disconnected">
-        <p class="help">Plug the clock into a USB port, click <b>Connect</b>, and choose the clock in the
-          list that appears. The tubes will run their startup sequence; that is normal.</p>
+        <h2>Connection</h2>
+        <p class="status">Not connected</p>
+        <p class="help">Plug the clock in and click <b>Connect</b>. In the list of serial ports that
+          appears, <b>click</b> the row that says <i>USB Single Serial</i>, then its <b>Connect</b>
+          button. The tubes will run their startup sequence; that is normal.</p>
         <button id="connect" class="primary">Connect</button>
         <label class="any"><input type="checkbox" id="any-port"> show all serial ports</label>
       </div>
-      <table class="only-connected details">
-        <tr><th>Port</th><td id="port-id">—</td></tr>
-        <tr><th>Firmware</th><td id="fw">—</td></tr>
-      </table>
+      <div class="only-connected statusline">
+        <span id="status" class="status">Connecting…</span>
+        <span id="port-id">—</span>
+        <span id="fw">—</span>
+      </div>
     </section>
 
     <section class="card">
@@ -65,6 +68,12 @@
       <div id="log" class="log"></div>
     </section>
   </main>
+
+  <dialog id="fail-dialog">
+    <h3 id="fail-title">No clock answered on that port</h3>
+    <p id="fail-detail"></p>
+    <button id="fail-retry" class="primary">Select another serial port</button>
+  </dialog>
 
   <footer>
     <a href="https://github.com/bobvan/blubNixieClock">blubNixieClock</a> ·

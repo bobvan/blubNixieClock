@@ -53,6 +53,17 @@ button.small { padding: 2px 8px; font-size: .8rem; text-transform: none; letter-
 .banner.err { border-color: var(--err); color: var(--err); }
 
 main { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+#connection { grid-column: 1 / -1; }
+body.connected #connection { padding: 8px 16px; }
+.statusline { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: baseline; }
+.statusline .status { margin: 0; }
+.statusline .status.ok::before { content: "●"; color: var(--ok); margin-right: .45em; }
+.statusline .status.warn::before { content: "●"; color: var(--warn); margin-right: .45em; }
+#port-id, #fw { color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .85rem; }
+dialog { background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 20px 24px; max-width: 420px; }
+dialog::backdrop { background: rgba(0, 0, 0, .6); }
+dialog h3 { margin: 0 0 8px; font-size: 1.1rem; }
+dialog p { margin: 0 0 16px; color: var(--muted); }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
 .log-card { grid-column: 1 / -1; }
 .note { color: var(--muted); font-size: .88rem; margin: 10px 0 0; }
