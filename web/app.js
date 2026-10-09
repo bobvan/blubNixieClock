@@ -128,7 +128,7 @@
     // advance the last reading by the time elapsed since it was taken
     const internal = lastInternal.epoch + Math.round((Date.now() - lastInternal.at) / 1000);
     els.internalTime.textContent = Blub.formatEpoch(internal);
-    els.tubeTime.textContent = Blub.formatEpoch(Blub.displayEpoch(internal, now)).slice(11);
+    els.tubeTime.textContent = Blub.formatEpoch(Blub.displayEpoch(internal, now)).slice(11, 16);
     const off = internal - Blub.expectedInternalEpoch(now);
     els.offset.textContent = `${off > 0 ? '+' : ''}${off} s`;
     els.offset.className = Math.abs(off) <= 1 ? 'ok' : Math.abs(off) <= 60 ? 'warn' : 'err';
