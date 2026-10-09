@@ -54,10 +54,8 @@ persisted.
 
 ## Reset on open [observed]
 
-Opening the port with DTR asserted **resets the Arduino**. With socat and pyserial the tubes
-visibly run their startup sequence. With Chrome's Web Serial on macOS the owner saw no startup
-sequence, yet a fresh boot banner still arrived ~1 s after open, so the firmware did restart
-(unresolved). Either way,
+Opening the port **resets the Arduino** (DTR auto-reset) — with socat, pyserial, and Chrome's
+Web Serial alike; the tubes run a brief startup sequence that is easy to miss. Then
 and about 1.6 s later the firmware prints a three-line boot banner:
 
 ```
