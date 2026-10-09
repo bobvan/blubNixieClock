@@ -5,7 +5,7 @@ by Dalibor Farný.
 
 The clock contains an Arduino behind a USB-serial bridge, speaking a small line-oriented
 protocol. This project talks to it from a browser using the Web Serial API: set the time from
-your computer's clock, read and change every setting, and show a digit on the tubes.
+your computer's clock, read and change every setting, and show a digit on the tube.
 
 ## Run it
 

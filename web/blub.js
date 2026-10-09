@@ -81,7 +81,7 @@ const Blub = (() => {
   function expectedInternalEpoch(date = new Date()) {
     return wallEpoch(date) - (isDstActive(date) ? 3600 : 0);
   }
-  // What the tubes should be showing for a given internal epoch.
+  // What the tube should be showing for a given internal epoch.
   function displayEpoch(internalEpoch, date = new Date()) {
     return internalEpoch + (isDstActive(date) ? 3600 : 0);
   }

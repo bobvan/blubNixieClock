@@ -40,7 +40,7 @@ DTR line is wired to the Arduino reset (see *Reset on open*).
 | `t<epoch>` | Set the time from a UNIX timestamp | `t` → internal epoch | **Epoch of local wall-clock time**, DST included; the firmware subtracts the DST hour per `z` and stores standard time. See *Time*. |
 | `f<1|2>` | Format: 1 = 12 h, 2 = 24 h | `f` → `1`/`2` | `f3` rejected. |
 | `s<1–9>` | Display speed, 1 fastest | `s` → value | `s0` was **accepted in RAM but not saved**: read back `0` until reboot, then the old value. |
-| `m<1–3>` | Transition speed | `m` → value | 1 slowest … 3 fastest (observed on the tubes). |
+| `m<1–3>` | Transition speed | `m` → value | 1 slowest … 3 fastest (observed on the tube). |
 | `n<1–9>` | Night-mode brightness | `n` → value | |
 | `o<1–9>` | Day-mode brightness | `o` → value | |
 | `r<HHhh>` | Night range, 24 h, e.g. `r2107` | `r` → `21-7` | Read-back format differs from the set format (`H-H`, unpadded). |
@@ -55,7 +55,7 @@ persisted.
 ## Reset on open [observed]
 
 Opening the port **resets the Arduino** (DTR auto-reset) — with socat, pyserial, and Chrome's
-Web Serial alike; the tubes run a brief startup sequence that is easy to miss. Then
+Web Serial alike; the clock runs a brief startup sequence that is easy to miss. Then
 and about 1.6 s later the firmware prints a three-line boot banner:
 
 ```
@@ -85,10 +85,10 @@ on it (no reply). The GUI's "no clock found" dialog therefore mentions both caus
 
 The clock has no time-zone setting. Internally it keeps **local standard time** as a UNIX-style
 epoch (wall time treated as if it were UTC), and applies the DST hour from the `z` rule at
-display. Observed with `z`=1 (US rule) in October: internal 21:47, tubes 10:47 PM.
+display. Observed with `z`=1 (US rule) in October: internal 21:47, tube 10:47 PM.
 
 - `t` with no argument returns that internal epoch, e.g. `1791496071` = 2026-10-08 21:47:51.
-- `t<epoch>` expects the **local wall-clock time** (what the tubes should show) as an epoch.
+- `t<epoch>` expects the **local wall-clock time** (what the tube should show) as an epoch.
   The firmware subtracts the DST offset itself: sending the standard-time epoch during DST
   set the clock an hour slow; sending `calendar.timegm(time.localtime())` set it correctly.
   The reply is the new internal (standard-time) epoch.
