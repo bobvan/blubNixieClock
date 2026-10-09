@@ -307,6 +307,11 @@
         '(right-click, <b>Open With</b>, <b>Google Chrome</b>) rather than from a web address.';
       return;
     }
+    if (location.protocol !== 'file:') {
+      fix.innerHTML = 'Open this page in <b>Google Chrome</b> (or Microsoft Edge, or a recent Firefox) ' +
+        'instead: copy the address above into Chrome. Don\'t have Chrome? ' +
+        '<a href="https://www.google.com/chrome/" target="_blank" rel="noopener">Download it free from Google</a>.';
+    }
     const name = navigator.brave ? 'Brave'
       : /Firefox\//.test(ua) ? 'Firefox'
       : /Edg\/|OPR\/|Chrome\//.test(ua) ? null
